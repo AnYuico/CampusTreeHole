@@ -1,0 +1,41 @@
+server:
+  port: 8080 # 后端服务端口
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://121.40.160.208:3305/campus_tree_hole?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&useSSL=false&allowPublicKeyRetrieval=true
+    username: root
+    password: tzp1911
+  servlet:
+    multipart:
+      max-file-size: 2MB      # 单个文件最大限制
+      max-request-size: 10MB    # 整个请求最大限制
+
+# MyBatis-Plus 配置
+mybatis-plus:
+  configuration:
+    # 开启控制台 SQL 日志打印（开发阶段必备）
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    # 开启驼峰命名转换 (db: user_name -> java: userName)
+    map-underscore-to-camel-case: true
+  # Mapper XML 扫描路径
+  mapper-locations: classpath:mapper/*.xml
+# Sa-Token 配置
+sa-token:
+  token-name: satoken     # token名称 (同时也是cookie名称)
+  timeout: 2592000        # token有效期，单位s 默认30天
+  is-concurrent: false     # 是否允许同一账号并发登录 (为true时允许一起登录, 为false时新登录挤掉旧登录)
+  is-share: false         # 在多人登录同一账号时，是否共用一个token (为false时每次登录新建token)
+  token-style: uuid       # token风格
+  is-log: false           # 是否输出日志
+  active-timeout: -1      # 临时有效期 -1代表不限制
+
+# MinIO 配置
+minio:
+  # ⚠️ 重点：这里必须填你的服务器公网IP，端口是 9000 (API端口)
+  # 如果你是本地开发连远程服务器，填远程IP；如果是服务器上跑jar包，也可以填 127.0.0.1
+  endpoint: http://121.40.160.208:9000
+  access-key: anyui
+  secret-key: tzplove611
+  bucket-name: anyui-oss
