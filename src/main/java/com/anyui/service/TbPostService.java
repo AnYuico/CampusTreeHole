@@ -39,7 +39,7 @@ public interface TbPostService extends IService<TbPost> {
      * @param category
      * @return
      */
-    List<PostVO> getPostList(String category);
+    List<PostVO> getPostList(String category,String keyword);
 
     /**
      * 查询自己的帖子

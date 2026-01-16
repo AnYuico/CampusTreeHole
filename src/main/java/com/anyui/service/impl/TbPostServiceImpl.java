@@ -36,23 +36,30 @@ public class TbPostServiceImpl extends ServiceImpl<TbPostMapper, TbPost> impleme
     private TbPostLikeMapper postLikeMapper;
 
     /**
-     * 方法 2: 含参查询 (查分类)
-     * ✅ 按照你的要求：判空后直接调用无参方法
+     * 根据类别查询帖子 OR 搜索
+     * @param category
+     * @param keyword
+     * @return
      */
     @Override
-    public List<PostVO> getPostList(String category) {
-        // 1. 如果分类为空，直接委托给无参方法 (复用逻辑)
-        if (!StringUtils.hasText(category)) {
-            return getPostList();
-        }
+    public List<PostVO> getPostList(String category, String keyword) {
+        // 【核心修改点】
+        // 删除了原来 "if (!StringUtils.hasText(category))" 的判断
+        // 改为使用 MyBatis-Plus 的动态条件 (condition, column, value)
 
-        // 2. 如果有分类，执行带条件的查询
         List<TbPost> postList = this.lambdaQuery()
-                .eq(TbPost::getCategory, category)
+                // 1. 如果 category 有值，则拼接: AND category = ?
+                .eq(StringUtils.hasText(category), TbPost::getCategory, category)
+
+                // 2. 如果 keyword 有值，则拼接: AND content LIKE %?%
+                // 这里的 StringUtils.hasText(keyword) 是控制开关，为 true 时才执行模糊查询
+                .like(StringUtils.hasText(keyword), TbPost::getContent, keyword)
+
+                // 3. 排序保持不变
                 .orderByDesc(TbPost::getCreateTime)
                 .list();
 
-        // 3. 调用公共方法转 VO
+        // 4. 调用公共方法转 VO (保持不变)
         return transferToVOList(postList);
     }
 

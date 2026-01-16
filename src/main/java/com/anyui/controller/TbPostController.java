@@ -33,11 +33,11 @@ public class TbPostController {
 
     @Operation(summary = "获取帖子列表")
     @GetMapping("/list")
-    // ✅ 修改：接收 category 参数，非必填
-    public Result<List<PostVO>> list(@RequestParam(required = false) String category) {
-        // 将参数传给 Service
-        List<PostVO> list = postService.getPostList(category);
-        return Result.success(list);
+    public Result<List<PostVO>> list(
+            @RequestParam(required = false) String category,
+            @RequestParam(required = false) String keyword) {
+
+        return Result.success(postService.getPostList(category,keyword)) ;
     }
 
     @Operation(summary = "删除帖子")
