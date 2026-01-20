@@ -63,4 +63,12 @@ public class TbPost implements Serializable {
     @Schema(description = "发布时间")
     @TableField("create_time")
     private LocalDateTime createTime;
+
+    @Schema(description = "状态:0待审核,1通过,2拒绝")
+    @TableField("status")
+    private Integer status;
+
+    @Schema(description = "审核拒绝原因")
+    @TableField("reason")
+    private String reason;
 }

@@ -35,4 +35,12 @@ public class PostVO {
     // 这样前端收到的是: "mediaUrls": ["http://x.jpg", "http://y.jpg"]
     @Schema(description = "图片/视频地址列表")
     private List<String> mediaUrls;
+
+    // ✅ 新增字段 1
+    @Schema(description = "审核状态: 0-待审核, 1-通过, 2-拒绝")
+    private Integer status;
+
+    // ✅ 新增字段 2
+    @Schema(description = "审核拒绝原因 (仅当 status=2 时有值)")
+    private String reason;
 }

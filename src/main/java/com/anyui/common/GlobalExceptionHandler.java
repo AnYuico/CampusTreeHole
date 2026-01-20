@@ -1,6 +1,8 @@
 package com.anyui.common;
 
 import cn.dev33.satoken.exception.NotLoginException;
+import cn.dev33.satoken.exception.NotPermissionException;
+import cn.dev33.satoken.exception.NotRoleException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -36,7 +38,15 @@ public class GlobalExceptionHandler {
         return Result.error(500, msg);
     }
 
-    // 3. 拦截其他未知异常
+    // 3.✅ 新增：拦截 角色/权限 异常 (返回 403 Forbidden)
+    @ExceptionHandler({NotRoleException.class, NotPermissionException.class})
+    public Result<String> handleNotRoleException(Exception e) {
+        // 可以打印一下日志
+        // e.printStackTrace();
+        return Result.error(403, "无权访问：您的权限不足");
+    }
+
+    // 4. 拦截其他未知异常
     @ExceptionHandler(Exception.class)
     public Result<String> handlerException(Exception e) {
         e.printStackTrace();
