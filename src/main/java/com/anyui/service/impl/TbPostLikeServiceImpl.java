@@ -5,6 +5,7 @@ import com.anyui.entity.TbPost;
 import com.anyui.entity.TbPostLike;
 import com.anyui.entity.dto.PostLikeDTO;
 import com.anyui.mapper.TbPostLikeMapper;
+import com.anyui.service.AiAuditService;
 import com.anyui.service.TbPostLikeService;
 import com.anyui.service.TbPostService;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
@@ -20,6 +21,9 @@ public class TbPostLikeServiceImpl extends ServiceImpl<TbPostLikeMapper, TbPostL
 
     @Autowired
     private TbPostService postService; // 需要操作帖子表
+
+
+
 
     @Override
     @Transactional(rollbackFor = Exception.class)

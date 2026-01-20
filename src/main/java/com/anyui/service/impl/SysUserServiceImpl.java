@@ -13,9 +13,11 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 
 import java.time.LocalDateTime;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -34,6 +36,35 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 
         // 3. 返回处理好的数据
         return user;
+    }
+
+    @Override
+    public List<SysUser> searchUsers(String keyword) {
+        LambdaQueryWrapper<SysUser> wrapper = new LambdaQueryWrapper<>();
+        if (StringUtils.hasText(keyword)) {
+            wrapper.like(SysUser::getNickname, keyword)
+                    .or()
+                    .like(SysUser::getUsername, keyword);
+        }
+        wrapper.orderByDesc(SysUser::getCreateTime);
+        List<SysUser> list = this.list(wrapper);
+
+        // 关键：Service层处理脱敏
+        list.forEach(u -> u.setPassword(null));
+        return list;
+    }
+
+    @Override
+    public void resetUser(Long userId) {
+        SysUser user = new SysUser();
+        user.setId(userId);
+        user.setNickname("违规用户_" + userId);
+        user.setAvatar("http://121.40.160.208:9000/anyui-oss/default-avatar.png");
+
+        boolean update = this.updateById(user);
+        if (!update) {
+            throw new RuntimeException("重置失败，用户不存在");
+        }
     }
 
     @Override
@@ -67,7 +98,11 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         }
 
         user.setGender(registerDTO.getGender() != null ? registerDTO.getGender() : 0);
-        user.setCreateTime(LocalDateTime.now()); // 补充注册时间
+        user.setCreateTime(LocalDateTime.now());
+
+        // ✅ 关键修改：强制设置默认角色为 "user"
+        // 即使数据库有默认值，代码里显式设置也是好习惯，防止数据库默认值被误改
+        user.setRole("user");
 
         // 6. 保存
         this.save(user);

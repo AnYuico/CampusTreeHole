@@ -5,6 +5,8 @@ import com.anyui.entity.dto.UserLoginDTO;
 import com.anyui.entity.dto.UserRegisterDTO;
 import com.anyui.entity.dto.UserUpdateDTO;
 import com.baomidou.mybatisplus.extension.service.IService;
+
+import java.util.List;
 import java.util.Map;
 
 public interface SysUserService extends IService<SysUser> {
@@ -43,4 +45,17 @@ public interface SysUserService extends IService<SysUser> {
      * @return
      */
     SysUser getUserInfo(Long userId);
+
+    /**
+     * 获取所有用户列表
+     * @param keyword
+     * @return
+     */
+    List<SysUser> searchUsers(String keyword);
+
+    /**
+     * 充值用户头像/昵称(违规)
+     * @param userId
+     */
+    void resetUser(Long userId);
 }

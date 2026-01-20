@@ -53,4 +53,8 @@ public class SysUser implements Serializable {
     @Schema(description = "注册时间")
     @TableField("create_time")
     private LocalDateTime createTime;
+
+    @Schema(description = "角色: user/admin")
+    @TableField("role")
+    private String role;
 }

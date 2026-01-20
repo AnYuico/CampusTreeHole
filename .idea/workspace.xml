@@ -4,11 +4,30 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="632ba343-a99f-44ae-addf-5f40a10971cd" name="更改" comment="校园树洞V1.0">
+    <list default="true" id="632ba343-a99f-44ae-addf-5f40a10971cd" name="更改" comment="校园树洞V1.1.1&#10;修改启动类的名称为&#10;SpringBootApplication">
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/anyui/common/PostStatusEnum.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/anyui/common/StpInterfaceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/anyui/config/SaTokenConfigure.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/anyui/controller/AdminController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/anyui/entity/SysConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/anyui/entity/dto/PostAuditDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/anyui/mapper/SysConfigMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/anyui/service/AdminService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/anyui/service/AiAuditService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/anyui/service/impl/AdminServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/mapper/SysConfigMapper.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/anyui/controller/TbPostController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/anyui/controller/TbPostController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/anyui/common/GlobalExceptionHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/anyui/common/GlobalExceptionHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/anyui/entity/SysUser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/anyui/entity/SysUser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/anyui/entity/TbPost.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/anyui/entity/TbPost.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/anyui/entity/vo/PostVO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/anyui/entity/vo/PostVO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/anyui/service/SysUserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/anyui/service/SysUserService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/anyui/service/TbPostService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/anyui/service/TbPostService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/anyui/service/impl/SysUserServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/anyui/service/impl/SysUserServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/anyui/service/impl/TbPostLikeServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/anyui/service/impl/TbPostLikeServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/anyui/service/impl/TbPostServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/anyui/service/impl/TbPostServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.yml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -18,6 +37,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
+        <option value="Enum" />
+        <option value="Interface" />
         <option value="Class" />
       </list>
     </option>
@@ -29,7 +50,24 @@
         <option value="1911" />
       </list>
     </option>
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="master" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="enabledProfiles">
+      <list>
+        <option value="native" />
+      </list>
+    </option>
+    <option name="disabledProfiles">
+      <list>
+        <option value="JDK-1.8" />
+      </list>
+    </option>
   </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 2
@@ -55,7 +93,7 @@
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;Anyui&quot;,
     &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
@@ -64,7 +102,7 @@
     &quot;project.structure.last.edited&quot;: &quot;模块&quot;,
     &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
     &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;MavenSettings&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
   &quot;keyToStringList&quot;: {
@@ -73,7 +111,14 @@
     ]
   }
 }</component>
-  <component name="RunManager" selected="Spring Boot.Main">
+  <component name="RunDashboard">
+    <option name="configurationTypes">
+      <set>
+        <option value="SpringBootApplicationConfigurationType" />
+      </set>
+    </option>
+  </component>
+  <component name="RunManager" selected="Spring Boot.SpringBootApplication">
     <configuration name="CodeGenerator" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.anyui.CodeGenerator" />
       <module name="CampusTreeHole" />
@@ -87,9 +132,9 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="Main" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
+    <configuration name="SpringBootApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
       <module name="CampusTreeHole" />
-      <option name="SPRING_BOOT_MAIN_CLASS" value="com.anyui.Main" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.anyui.SpringBootApplication" />
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="com.anyui.*" />
@@ -102,7 +147,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Spring Boot.Main" />
+        <item itemvalue="Spring Boot.SpringBootApplication" />
+        <item itemvalue="应用程序.CodeGenerator" />
         <item itemvalue="应用程序.CodeGenerator" />
       </list>
     </recent_temporary>
@@ -131,7 +177,15 @@
       <workItem from="1768464610961" duration="1383000" />
       <workItem from="1768525888760" duration="5000" />
       <workItem from="1768526020906" duration="601000" />
-      <workItem from="1768548969713" duration="1645000" />
+      <workItem from="1768548969713" duration="2070000" />
+      <workItem from="1768551058365" duration="172000" />
+      <workItem from="1768551261725" duration="597000" />
+      <workItem from="1768615300454" duration="858000" />
+      <workItem from="1768618189270" duration="595000" />
+      <workItem from="1768899110907" duration="6280000" />
+      <workItem from="1768906125867" duration="219000" />
+      <workItem from="1768906352220" duration="1853000" />
+      <workItem from="1768908385639" duration="4205000" />
     </task>
     <task id="LOCAL-00001" summary="校园树洞V1.0">
       <option name="closed" value="true" />
@@ -141,7 +195,15 @@
       <option name="project" value="LOCAL" />
       <updated>1768463955792</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="校园树洞V1.1 &#10;新增关键字模糊查询">
+      <option name="closed" value="true" />
+      <created>1768550838502</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1768550838502</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -161,6 +223,7 @@
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <MESSAGE value="校园树洞V1.0" />
-    <option name="LAST_COMMIT_MESSAGE" value="校园树洞V1.0" />
+    <MESSAGE value="校园树洞V1.1 &#10;新增关键字模糊查询" />
+    <option name="LAST_COMMIT_MESSAGE" value="校园树洞V1.1 &#10;新增关键字模糊查询" />
   </component>
 </project>
