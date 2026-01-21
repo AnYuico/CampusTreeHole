@@ -4,6 +4,7 @@ import cn.dev33.satoken.annotation.SaCheckLogin; // ✅ 新增：Sa-Token 鉴权
 import cn.dev33.satoken.annotation.SaCheckRole;
 import com.anyui.common.Result;
 import com.anyui.entity.dto.PostAddDTO;
+import com.anyui.entity.dto.PostDTO;
 import com.anyui.entity.vo.PostVO;
 import com.anyui.service.TbPostService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -61,6 +62,17 @@ public class TbPostController {
     public Result<List<PostVO>> listMyPosts() {
         // 直接调用 Service 层逻辑
         return Result.success(postService.listMyPosts());
+    }
+
+    @Operation(summary = "修改帖子(并重新触发审核)")
+    @PostMapping("/update")
+    public Result<String> updatePost(@RequestBody PostDTO postDTO) {
+        // 简单参数校验
+        if (postDTO.getId() == null) {
+            return Result.error("帖子ID不能为空");
+        }
+        postService.updatePost(postDTO);
+        return Result.success("修改成功，请等待审核");
     }
 
 

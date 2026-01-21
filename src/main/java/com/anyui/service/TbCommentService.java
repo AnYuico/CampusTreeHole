@@ -2,6 +2,7 @@ package com.anyui.service;
 
 import com.anyui.entity.TbComment;
 import com.anyui.entity.dto.CommentAddDTO;
+import com.anyui.entity.dto.CommentUpdateDTO;
 import com.anyui.entity.vo.CommentVO;
 import com.baomidou.mybatisplus.extension.service.IService;
 
@@ -27,4 +28,26 @@ public interface TbCommentService extends IService<TbComment> {
      * @param commentId 评论ID
      */
     void deleteComment(Long commentId);
+
+    /**
+     * 修改评论
+     * @param updateDTO
+     */
+    void updateComment(CommentUpdateDTO updateDTO);
+
+    List<CommentVO> listMyComments();
+
+
+    /**
+     * 获取待审核评论列表 (带原帖摘要)
+     */
+    List<CommentVO> getPendingComments();
+
+    /**
+     * 执行评论审核
+     * @param commentId 评论ID
+     * @param pass 是否通过
+     * @param reason 拒绝理由
+     */
+    void auditComment(Long commentId, Boolean pass, String reason);
 }

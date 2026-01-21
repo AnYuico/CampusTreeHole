@@ -1,12 +1,15 @@
 package com.anyui.service.impl;
 
 import cn.dev33.satoken.stp.StpUtil;
+import com.alibaba.fastjson2.JSON;
 import com.anyui.common.PostCategoryConstants;
 import com.anyui.entity.SysConfig;
 import com.anyui.entity.SysUser;
 import com.anyui.entity.TbPost;
 import com.anyui.entity.TbPostLike;
+import com.anyui.entity.dto.AuditResult;
 import com.anyui.entity.dto.PostAddDTO;
+import com.anyui.entity.dto.PostDTO;
 import com.anyui.entity.vo.PostVO;
 import com.anyui.mapper.SysConfigMapper;
 import com.anyui.mapper.TbPostLikeMapper;
@@ -187,92 +190,92 @@ public class TbPostServiceImpl extends ServiceImpl<TbPostMapper, TbPost> impleme
         return stats;
     }
 
-
+    // ==================== 1. 发布帖子 ====================
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void addPost(PostAddDTO addDTO) {
-        // --- 1. 业务逻辑校验 ---
-
-        // 1.1 内容非空校验
-        if (!StringUtils.hasText(addDTO.getContent())) {
-            throw new RuntimeException("帖子内容不能为空");
-        }
-
-        // 1.2 分类合法性校验
-        // 如果前端传了分类，必须是我们在常量类中定义的 5 种之一
-        if (StringUtils.hasText(addDTO.getCategory()) && !PostCategoryConstants.isValid(addDTO.getCategory())) {
-            throw new RuntimeException("非法的帖子分类类型");
-        }
-
-        // --- 2. 数据处理 ---
-
-        // 2.1 获取当前登录用户ID
-        long currentUserId = StpUtil.getLoginIdAsLong();
-
-        // 2.2 复制属性 DTO -> Entity
         TbPost post = new TbPost();
         BeanUtils.copyProperties(addDTO, post);
 
-        // 2.3 补全系统字段
-        post.setUserId(currentUserId);
+        long userId = StpUtil.getLoginIdAsLong();
+        post.setUserId(userId);
         post.setCreateTime(LocalDateTime.now());
         post.setViewCount(0);
         post.setLikeCount(0);
         post.setCommentCount(0);
 
-        // 2.4 处理默认值
-        // 如果前端没传分类，默认为 "campus_life" (校园趣事)
-        if (!StringUtils.hasText(post.getCategory())) {
-            post.setCategory(PostCategoryConstants.CAMPUS_LIFE);
-        }
-
-        // 默认为非匿名 (0)
-        if (post.getIsAnonymous() == null) {
-            post.setIsAnonymous(0);
-        }
-
-        // 如果前端没传图片数组，手动设为空列表
-        if (post.getMediaUrls() == null) {
+        // 处理图片 (TypeHandler 会自动处理 List<String>)
+        if (addDTO.getMediaUrls() == null) {
             post.setMediaUrls(Collections.emptyList());
         }
 
-        // --- 3. 审核逻辑 (核心修改) ---
+        // ✅ 调用抽取的审核逻辑
+        this.processAiAudit(post);
 
-        // 先默认设置为 0 (待审核)，这是兜底状态
-        post.setStatus(PostStatusEnum.PENDING.getCode());
-
-        // 检查 AI 审核开关 (checkAiSwitch 方法会优先读缓存)
-        boolean aiEnabled = checkAiSwitch();
-
-        if (aiEnabled) {
-            // === 场景 A: 开关开启，走 AI 自动审核 ===
-            try {
-                // 调用 AI 服务
-                AiAuditService.AuditResult result = aiAuditService.auditText(post.getContent());
-
-                if (result.pass) {
-                    // AI 判定通过 -> 设为 1 (已发布)
-                    post.setStatus(PostStatusEnum.APPROVED.getCode());
-                } else {
-                    // AI 判定违规 -> 设为 2 (拒绝) 并记录原因
-                    post.setStatus(PostStatusEnum.REJECTED.getCode());
-                    post.setReason("[AI审核] " + result.reason);
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-                // AI 服务若发生异常 (超时/网络错误)，执行降级策略：
-                // 保持 status = 0 (待审核)，转由人工处理，不影响用户发帖
-                post.setStatus(PostStatusEnum.PENDING.getCode());
-            }
-        } else {
-            // === 场景 B: 开关关闭，直接转人工审核 ===
-            // 保持 status = 0 (待审核)
-            post.setStatus(PostStatusEnum.PENDING.getCode());
-        }
-
-        // --- 4. 保存入库 ---
         this.save(post);
     }
+
+    // ==================== 2. 修改帖子 ====================
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void updatePost(PostDTO updateDTO) {
+        // 1. 查
+        TbPost post = this.getById(updateDTO.getId());
+        if (post == null) throw new RuntimeException("帖子不存在");
+
+        // 2. 权
+        long currentUserId = StpUtil.getLoginIdAsLong();
+        if (!post.getUserId().equals(currentUserId)) {
+            throw new RuntimeException("无权修改他人帖子");
+        }
+
+        // 3. 改
+        post.setContent(updateDTO.getContent());
+        post.setCategory(updateDTO.getCategory());
+        post.setIsAnonymous(updateDTO.getIsAnonymous());
+
+        // 处理图片
+        if (updateDTO.getMediaUrls() != null) {
+            post.setMediaUrls(updateDTO.getMediaUrls());
+        } else {
+            post.setMediaUrls(Collections.emptyList());
+        }
+
+        // ✅ 调用抽取的审核逻辑 (核心解耦点)
+        // 只要内容变了，就无脑重审，逻辑统一
+        this.processAiAudit(post);
+
+        // 4. 存
+        this.updateById(post);
+    }
+
+    // ==================== ⬇️ 核心抽取：统一审核逻辑 ⬇️ ====================
+    /**
+     * 执行AI审核并设置帖子状态
+     * @param post 待保存/更新的帖子对象
+     */
+    private void processAiAudit(TbPost post) {
+        try {
+            // 调用 AI 服务
+            AuditResult result = aiAuditService.auditText(post.getContent());
+
+            if (result.isPass()) {
+                post.setStatus(1); // 通过
+                post.setReason("");
+            } else {
+                post.setStatus(2); // 拒绝
+                post.setReason(result.getReason());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            // 🛑 服务降级逻辑
+            // AI 挂了 -> 转人工审核 (Status=0)
+            post.setStatus(0);
+            post.setReason("AI服务繁忙，等待人工审核");
+        }
+    }
+
+
 
     /**
      * ✅ 修改后的检查方法：优先读缓存

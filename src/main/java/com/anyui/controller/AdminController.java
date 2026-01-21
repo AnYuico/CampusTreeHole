@@ -4,11 +4,16 @@ import cn.dev33.satoken.annotation.SaCheckRole;
 import com.anyui.common.Result;
 import com.anyui.entity.SysConfig;
 import com.anyui.entity.SysUser;
+import com.anyui.entity.dto.CommentAuditDTO;
 import com.anyui.entity.dto.PostAuditDTO;
+import com.anyui.entity.vo.CommentVO;
 import com.anyui.entity.vo.PostVO;
 import com.anyui.mapper.SysConfigMapper;
+import com.anyui.service.SysConfigService;
 import com.anyui.service.SysUserService;
+import com.anyui.service.TbCommentService;
 import com.anyui.service.TbPostService;
+import com.anyui.service.impl.TbCommentServiceImpl;
 import com.anyui.service.impl.TbPostServiceImpl;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import io.swagger.v3.oas.annotations.Operation;
@@ -31,25 +36,46 @@ public class AdminController {
     @Autowired
     private SysUserService userService;
 
-    @Autowired
-    private SysConfigMapper sysConfigMapper;
 
-    // ==================== 1. 帖子审核相关 ====================
+    @Autowired
+    private TbCommentService commentService;
+
+    @Autowired
+    private SysConfigService sysConfigService; // ✅ 注入配置服务
+
+    // ==================== 1. 审核相关 ====================
 
     @Operation(summary = "获取待审核帖子列表")
-    @GetMapping("/audit/list")
+    @GetMapping("/audit/post/list")
     public Result<List<PostVO>> getPendingPosts() {
         // C层只管调用，逻辑去S层找
         return Result.success(postService.getPendingPosts());
     }
 
-    @Operation(summary = "执行审核操作")
-    @PostMapping("/audit/do")
+    @Operation(summary = "获取待审核评论列表")
+    @GetMapping("/audit/comment/list")
+    public Result<List<CommentVO>> getPendingComments(){
+        return Result.success(commentService.getPendingComments());
+    }
+
+    @Operation(summary = "执行帖子审核操作")
+    @PostMapping("/audit/post/do")
     // ✅ 修改点：使用 @RequestBody 接收 JSON 对象
     public Result<String> auditPost(@RequestBody PostAuditDTO auditDTO) {
-        // 调用 Service (Service 层保持不变，还是接收 3 个参数，这样耦合度低)
         postService.auditPost(
                 auditDTO.getPostId(),
+                auditDTO.getPass(),
+                auditDTO.getReason()
+        );
+        return Result.success("审核操作完成");
+    }
+
+    @Operation(summary = "执行评论审核操作")
+    @PostMapping("/audit/comment/do")
+    // ✅ 修改点：使用 @RequestBody 接收 JSON 对象
+    public Result<String> auditComment(@RequestBody CommentAuditDTO auditDTO) {
+        commentService.auditComment(
+                auditDTO.getCommentId(),
                 auditDTO.getPass(),
                 auditDTO.getReason()
         );
@@ -95,39 +121,14 @@ public class AdminController {
     @Operation(summary = "获取AI审核开关状态")
     @GetMapping("/config/ai-status")
     public Result<Boolean> getAiAuditStatus() {
-        SysConfig config = sysConfigMapper.selectOne(new LambdaQueryWrapper<SysConfig>()
-                .eq(SysConfig::getParamKey, "ai_audit_enabled"));
-
-        // 如果没配，默认算开启
-        boolean isOpen = config != null && "true".equalsIgnoreCase(config.getParamValue());
+        boolean isOpen = sysConfigService.isAiAuditEnabled();
         return Result.success(isOpen);
     }
 
     @Operation(summary = "修改AI审核开关")
     @PostMapping("/config/ai-status")
     public Result<String> updateAiAuditStatus(@RequestParam Boolean open) {
-        // 1. 数据库操作 (保持原样)
-        SysConfig config = sysConfigMapper.selectOne(new LambdaQueryWrapper<SysConfig>()
-                .eq(SysConfig::getParamKey, "ai_audit_enabled"));
-
-        if (config == null) {
-            config = new SysConfig();
-            config.setParamKey("ai_audit_enabled");
-            config.setRemark("AI审核开关");
-        }
-
-        config.setParamValue(String.valueOf(open));
-
-        if (config.getId() == null) {
-            sysConfigMapper.insert(config);
-        } else {
-            sysConfigMapper.updateById(config);
-        }
-
-        // ✅ 核心修改：手动更新 Service 里的缓存
-        // 这样下一次发帖时，checkAiSwitch() 拿到的就是最新值
-        TbPostServiceImpl.AI_SWITCH_CACHE = open;
-
+        sysConfigService.setAiAuditEnabled(open);
         return Result.success("设置成功，当前状态：" + (open ? "开启" : "关闭"));
     }
 }

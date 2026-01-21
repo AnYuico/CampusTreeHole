@@ -2,6 +2,7 @@ package com.anyui.controller;
 
 import com.anyui.common.Result;
 import com.anyui.entity.dto.CommentAddDTO;
+import com.anyui.entity.dto.CommentUpdateDTO;
 import com.anyui.entity.vo.CommentVO;
 import com.anyui.service.TbCommentService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -48,5 +49,19 @@ public class TbCommentController {
         commentService.deleteComment(commentId);
 
         return Result.success("删除成功");
+    }
+
+    @Operation(summary = "修改评论(并重新触发审核)")
+    @PostMapping("/update")
+    public Result<String> updateComment(@RequestBody CommentUpdateDTO updateDTO) {
+        commentService.updateComment(updateDTO);
+        return Result.success("修改成功，请等待审核");
+    }
+
+    @Operation(summary = "获取我的评论列表")
+    @GetMapping("/listMy")
+    public Result<List<CommentVO>> listMyComments() {
+        List<CommentVO> list = commentService.listMyComments();
+        return Result.success(list);
     }
 }

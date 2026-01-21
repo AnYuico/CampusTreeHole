@@ -57,4 +57,13 @@ public class TbComment implements Serializable {
     @Schema(description = "父评论id")
     @TableField("parent_id")
     private Long parentId;
+
+
+    @Schema(description = "审核状态(0-待审核 1-通过 2-拒绝)")
+    @TableField("status")
+    private Integer status;
+
+    @Schema(description = "拒绝理由")
+    @TableField("reason")
+    private String reason;
 }
