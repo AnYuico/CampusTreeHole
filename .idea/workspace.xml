@@ -4,30 +4,29 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="632ba343-a99f-44ae-addf-5f40a10971cd" name="更改" comment="校园树洞V1.1.1&#10;修改启动类的名称为&#10;SpringBootApplication">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/anyui/common/PostStatusEnum.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/anyui/common/StpInterfaceImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/anyui/config/SaTokenConfigure.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/anyui/controller/AdminController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/anyui/entity/SysConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/anyui/entity/dto/PostAuditDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/anyui/mapper/SysConfigMapper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/anyui/service/AdminService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/anyui/service/AiAuditService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/anyui/service/impl/AdminServiceImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/mapper/SysConfigMapper.xml" afterDir="false" />
+    <list default="true" id="632ba343-a99f-44ae-addf-5f40a10971cd" name="更改" comment="校园树洞V2.0&#10; feat(admin): &#10;  完成管理员后台体系及AI审核服务降级优化.&#10;  &#10;  [Backend]&#10;  1. 架构升级：升级 MyBatis-Plus 至 3.5.9，解决 Spring Boot 3.2+ 兼容性问题。&#10;  2. 核心逻辑：优化 AI 审核机制，实现服务降级（AI 异常时自动转为人工审核 status=0）。&#10;  3. API重构：管理员审核接口重构为 PostAuditDTO 接收 JSON 参数，统一交互规范。&#10;  4. 新增接口：增加用户资料重构(resetUser)及帖子强制删除(forceDelete)接口。&#10;  &#10;  [Frontend]&#10;  1. 新增模块：完成管理员控制台(Dashboard)、人工审核、帖子管理、用户管理四大页面。&#10;  2. 交互优化：首页增加管理员入口悬浮球（权限动态判定）。&#10;  3. 体验升级：实现发布后全局事件总线(EventBus)自动刷新首页逻辑。&#10;  4. 修复缺陷：修复 API 调用时的 Content-Type 问题及 admin.js 路径重复定义 bug。">
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/anyui/entity/dto/AuditResult.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/anyui/entity/dto/CommentAuditDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/anyui/entity/dto/CommentUpdateDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/anyui/entity/dto/PostDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/anyui/service/SysConfigService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/anyui/service/impl/SysConfigServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/mapper/AdminMapper.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/anyui/common/GlobalExceptionHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/anyui/common/GlobalExceptionHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/anyui/entity/SysUser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/anyui/entity/SysUser.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/anyui/entity/TbPost.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/anyui/entity/TbPost.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/anyui/entity/vo/PostVO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/anyui/entity/vo/PostVO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/anyui/service/SysUserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/anyui/service/SysUserService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/anyui/controller/AdminController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/anyui/controller/AdminController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/anyui/controller/TbCommentController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/anyui/controller/TbCommentController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/anyui/controller/TbPostController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/anyui/controller/TbPostController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/anyui/entity/SysConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/anyui/entity/SysConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/anyui/entity/TbComment.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/anyui/entity/TbComment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/anyui/entity/vo/CommentVO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/anyui/entity/vo/CommentVO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/anyui/service/AdminService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/anyui/service/AiAuditService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/anyui/service/AiAuditService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/anyui/service/TbCommentService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/anyui/service/TbCommentService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/anyui/service/TbPostService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/anyui/service/TbPostService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/anyui/service/impl/SysUserServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/anyui/service/impl/SysUserServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/anyui/service/impl/TbPostLikeServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/anyui/service/impl/TbPostLikeServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/anyui/service/impl/AdminServiceImpl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/anyui/service/impl/TbCommentServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/anyui/service/impl/TbCommentServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/anyui/service/impl/TbPostServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/anyui/service/impl/TbPostServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.yml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -111,6 +110,11 @@
     ]
   }
 }</component>
+  <component name="RecentsManager">
+    <key name="CreateClassDialog.RecentsKey">
+      <recent name="com.anyui.entity.dto" />
+    </key>
+  </component>
   <component name="RunDashboard">
     <option name="configurationTypes">
       <set>
@@ -185,7 +189,9 @@
       <workItem from="1768899110907" duration="6280000" />
       <workItem from="1768906125867" duration="219000" />
       <workItem from="1768906352220" duration="1853000" />
-      <workItem from="1768908385639" duration="4205000" />
+      <workItem from="1768908385639" duration="4822000" />
+      <workItem from="1768918247191" duration="5782000" />
+      <workItem from="1768958157984" duration="5703000" />
     </task>
     <task id="LOCAL-00001" summary="校园树洞V1.0">
       <option name="closed" value="true" />
@@ -203,7 +209,15 @@
       <option name="project" value="LOCAL" />
       <updated>1768550838502</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="校园树洞V2.0&#10; feat(admin): &#10;  完成管理员后台体系及AI审核服务降级优化.&#10;  &#10;  [Backend]&#10;  1. 架构升级：升级 MyBatis-Plus 至 3.5.9，解决 Spring Boot 3.2+ 兼容性问题。&#10;  2. 核心逻辑：优化 AI 审核机制，实现服务降级（AI 异常时自动转为人工审核 status=0）。&#10;  3. API重构：管理员审核接口重构为 PostAuditDTO 接收 JSON 参数，统一交互规范。&#10;  4. 新增接口：增加用户资料重构(resetUser)及帖子强制删除(forceDelete)接口。&#10;  &#10;  [Frontend]&#10;  1. 新增模块：完成管理员控制台(Dashboard)、人工审核、帖子管理、用户管理四大页面。&#10;  2. 交互优化：首页增加管理员入口悬浮球（权限动态判定）。&#10;  3. 体验升级：实现发布后全局事件总线(EventBus)自动刷新首页逻辑。&#10;  4. 修复缺陷：修复 API 调用时的 Content-Type 问题及 admin.js 路径重复定义 bug。">
+      <option name="closed" value="true" />
+      <created>1768915821362</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1768915821362</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -224,6 +238,7 @@
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <MESSAGE value="校园树洞V1.0" />
     <MESSAGE value="校园树洞V1.1 &#10;新增关键字模糊查询" />
-    <option name="LAST_COMMIT_MESSAGE" value="校园树洞V1.1 &#10;新增关键字模糊查询" />
+    <MESSAGE value="校园树洞V2.0&#10; feat(admin): &#10;  完成管理员后台体系及AI审核服务降级优化.&#10;  &#10;  [Backend]&#10;  1. 架构升级：升级 MyBatis-Plus 至 3.5.9，解决 Spring Boot 3.2+ 兼容性问题。&#10;  2. 核心逻辑：优化 AI 审核机制，实现服务降级（AI 异常时自动转为人工审核 status=0）。&#10;  3. API重构：管理员审核接口重构为 PostAuditDTO 接收 JSON 参数，统一交互规范。&#10;  4. 新增接口：增加用户资料重构(resetUser)及帖子强制删除(forceDelete)接口。&#10;  &#10;  [Frontend]&#10;  1. 新增模块：完成管理员控制台(Dashboard)、人工审核、帖子管理、用户管理四大页面。&#10;  2. 交互优化：首页增加管理员入口悬浮球（权限动态判定）。&#10;  3. 体验升级：实现发布后全局事件总线(EventBus)自动刷新首页逻辑。&#10;  4. 修复缺陷：修复 API 调用时的 Content-Type 问题及 admin.js 路径重复定义 bug。" />
+    <option name="LAST_COMMIT_MESSAGE" value="校园树洞V2.0&#10; feat(admin): &#10;  完成管理员后台体系及AI审核服务降级优化.&#10;  &#10;  [Backend]&#10;  1. 架构升级：升级 MyBatis-Plus 至 3.5.9，解决 Spring Boot 3.2+ 兼容性问题。&#10;  2. 核心逻辑：优化 AI 审核机制，实现服务降级（AI 异常时自动转为人工审核 status=0）。&#10;  3. API重构：管理员审核接口重构为 PostAuditDTO 接收 JSON 参数，统一交互规范。&#10;  4. 新增接口：增加用户资料重构(resetUser)及帖子强制删除(forceDelete)接口。&#10;  &#10;  [Frontend]&#10;  1. 新增模块：完成管理员控制台(Dashboard)、人工审核、帖子管理、用户管理四大页面。&#10;  2. 交互优化：首页增加管理员入口悬浮球（权限动态判定）。&#10;  3. 体验升级：实现发布后全局事件总线(EventBus)自动刷新首页逻辑。&#10;  4. 修复缺陷：修复 API 调用时的 Content-Type 问题及 admin.js 路径重复定义 bug。" />
   </component>
 </project>

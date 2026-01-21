@@ -1,5 +1,6 @@
 package com.anyui.service;
 
+import com.anyui.entity.dto.AuditResult;
 import org.springframework.ai.chat.ChatClient;
 import org.springframework.ai.chat.prompt.Prompt;
 import org.springframework.ai.chat.prompt.PromptTemplate;
@@ -76,14 +77,4 @@ public class AiAuditService {
         }
     }
 
-    // 简单的结果内部类
-    public static class AuditResult {
-        public boolean pass;
-        public String reason;
-
-        public AuditResult(boolean pass, String reason) {
-            this.pass = pass;
-            this.reason = reason;
-        }
-    }
 }

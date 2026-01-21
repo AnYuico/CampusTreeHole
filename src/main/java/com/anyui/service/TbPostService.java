@@ -2,6 +2,7 @@ package com.anyui.service;
 
 import com.anyui.entity.TbPost;
 import com.anyui.entity.dto.PostAddDTO;
+import com.anyui.entity.dto.PostDTO;
 import com.anyui.entity.vo.PostVO;
 import com.baomidou.mybatisplus.extension.service.IService;
 
@@ -75,4 +76,9 @@ public interface TbPostService extends IService<TbPost> {
      */
     Map<String, Object> getDashboardStats();
 
+    /**
+     * 修改帖子
+     * @param postDTO
+     */
+    void updatePost(PostDTO postDTO);
 }
